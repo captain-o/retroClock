@@ -6,7 +6,7 @@ import datetime
 #import testSound as alarm
 import csv
 import pandas as pd
-from flask import Flask, request
+from flask import Flask, request, jsonify, abort
 import json
 
 
@@ -76,14 +76,22 @@ def create_job(job):
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
 
-@app.route('/api/alarms')
-def get_data():
+@app.route('/api/alarms', methods=['GET'])
+def get_all_alarms():
     #all_jobs = schedule.get_jobs()
     return db
+
+@app.route('/api/alarm/<id>', methods=['GET'])
+def get_alarm_by_id(id):
+    for alarm in db:
+        if(str(alarm["id"])==id):
+            return alarm
+    abort(404)
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return jsonify({'error': 'Data not found'}), 404
 
 @app.route('/api/setalarm', methods=['POST'])
 def set_alarm():
