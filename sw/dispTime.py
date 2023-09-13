@@ -19,7 +19,7 @@ serial = spi(port=0, device=0, gpio=noop())
 #device = max7219(serial, cascaded=2, block_orientation=block_orientation, rotate=rotate, blocks_arranged_in_reverse_order=inreverse)
 device = max7219(serial, cascaded=2)
 print("Created device")
-device.contrast(10)
+device.contrast(1)
 #device.contrast(100)
 
 
@@ -44,4 +44,7 @@ while True:
 #CLK = 23
 
 #2 Displays
-#1:1 gebrückt
+#1:1 gebruecckt
+
+# run script:
+# python3 dispTime.py
