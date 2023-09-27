@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RetroClock</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .delete-button {
+        background: none;
+        border: none;
+        color: #f44336; /* Material Design red color */
+        cursor: pointer;
+        font-size: 16px; /* Adjust the font size to make it smaller */
+    }
+
+    .delete-button:hover {
+        color: #d32f2f; /* Darker shade of red on hover */
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>RetroClock</h1>
+        <form method="POST">
+             <div class="mdc-text-field">
+                    <label for="timepicker">Select a time:</label>
+                     <input type="text" id="timepicker" name="time" > <!-- Make time selection required -->
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+
+            <h2>Select weekdays:</h2>
+            <div class="weekdays">
+                <input type="checkbox" id="montag" name="weekday" value="monday">
+                <label for="monday">Montag</label>
+
+                <input type="checkbox" id="dienstag" name="weekday" value="tuesday">
+                <label for="tuesday">Dienstag</label>
+
+                <input type="checkbox" id="mittwoch" name="weekday" value="wednesday">
+                <label for="tuesday">Mittwoch</label>
+
+                <input type="checkbox" id="donnerstag" name="weekday" value="thursday">
+                <label for="tuesday">Donnerstag</label>
+
+                <input type="checkbox" id="freitag" name="weekday" value="friday">
+                <label for="tuesday">Freitag</label>
+
+                <input type="checkbox" id="samstag" name="weekday" value="saturday">
+                <label for="tuesday">Samstag</label>
+
+                <input type="checkbox" id="sonntag" name="weekday" value="sunday">
+                <label for="tuesday">Sonntag</label>
+
+                <!-- Repeat the above two lines for the remaining weekdays -->
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>JSON Data:</h2>
+        <ul>
+            {% for entry in data %}
+                <li>ID: {{ entry.id }}, Time: {{ entry.time }}, Weekdays: {{ entry.weekdays }}
+                    <form method="POST" action="{{ url_for('remove_entry', entry_id=entry.id) }}" style="display: inline;">
+                        <button type="submit" class="delete-button">
+                            <i class="material-icons">delete</i> <!-- Material Design delete icon -->
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr('#timepicker', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'H:i',
+                time_24hr: true, // Enable 24-hour format
+            });
+
+
+
+        });
+    </script>
+
+
+</body>
+</html>
