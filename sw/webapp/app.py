@@ -4,6 +4,9 @@ import os
 
 app = Flask(__name__)
 
+#run with python app.py
+# acces on http://127.0.0.1:5000/
+
 # Function to write data to a JSON file
 def write_to_json(time, weekdays):
     data = {
